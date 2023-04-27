@@ -9,11 +9,11 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Hello world received a request.")
-	target := os.Getenv("TARGET")
+	target := os.Getenv("NAME")
 	if target == "" {
-		target = "world"
+		target = "friend"
 	}
-	fmt.Fprintf(w, "Hello next generation %s!\n", Reverse(target))
+	fmt.Fprintf(w, "You're invited %s!\n", target)
 }
 
 func main() {
@@ -21,13 +21,4 @@ func main() {
 
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
-}
-
-// Reverse returns its argument string reversed rune-wise left to right.
-func Reverse(s string) string {
-	r := []rune(s)
-	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
-		r[i], r[j] = r[j], r[i]
-	}
-	return string(r)
 }
